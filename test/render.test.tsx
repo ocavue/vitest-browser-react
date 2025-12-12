@@ -6,6 +6,7 @@ import { render } from 'vitest-browser-react'
 import { HelloWorld } from './fixtures/HelloWorld'
 import { Counter } from './fixtures/Counter'
 import { SuspendedHelloWorld } from './fixtures/SuspendedHelloWorld'
+import { MicrotaskFlushSync } from './fixtures/MicrotaskFlushSync'
 
 test('renders simple component', async () => {
   const screen = await render(<HelloWorld />)
@@ -48,4 +49,8 @@ test('waits for suspended boundaries', async ({ onTestFinished }) => {
   vi.runAllTimers()
   await result
   expect(page.getByText('Hello Vitest')).toBeInTheDocument()
+})
+
+test('can handle flushSync without warnings', async ({ onTestFinished }) => {
+  await render(<MicrotaskFlushSync />)
 })
